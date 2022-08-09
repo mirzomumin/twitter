@@ -10,7 +10,7 @@ click-repl==0.2.0
 colorama==0.4.5
 Deprecated==1.2.13
 dj-database-url==1.0.0
-Django==4.1
+Django==3.2.9
 django-heroku==0.3.1
 django-phonenumber-field==6.3.0
 django-phonenumbers==1.0.1
