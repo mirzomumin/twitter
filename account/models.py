@@ -12,7 +12,10 @@ class Account(AbstractUser):
 	)
 	first_name = models.CharField(max_length=50, blank=False, null=True)
 	last_name = models.CharField(max_length=50, blank=False, null=True)
-	avatar = models.ImageField(upload_to='media/avatar/', null=True, blank=True, default='')
+	avatar = models.ImageField(
+		upload_to='media/avatar/',
+		null=True, blank=True,
+		default='../static/images/profile2.png')
 	email = models.EmailField(unique=True, null=False, blank=False)
 	phone = PhoneNumberField(unique=True, null=True)
 	gender = models.CharField(max_length=10, choices=GENDER, null=True)

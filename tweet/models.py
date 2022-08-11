@@ -39,6 +39,7 @@ class Notification(models.Model):
 		('like', 'Like'),
 		('comment', 'Comment'),
 		('follow', 'Follow'),
+		('retweet', 'Retweet'),
 	)
 	notification_type = models.CharField(
 		max_length=7,
