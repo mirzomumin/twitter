@@ -6,19 +6,22 @@ from account.models import Account
 
 
 class AccountSerializer(serializers.ModelSerializer):
+	'''Account Serializer'''
 	class Meta:
 		model = Account
-		fields = '__all__'
+		fields = ['followers', 'followings']
 
 
 class MessageSerializer(serializers.ModelSerializer):
+	'''Message Serializer'''
 	class Meta:
 		model = Message
 		fields = '__all__'
+		read_only_fields = ['user', 'chat']
 
 
 class ChatSerializer(serializers.ModelSerializer):
-	# chat_messages = MessageSerializer(many=True)
+	'''Chat Serializer'''
 	avatar = serializers.StringRelatedField(default=None)
 	username = serializers.StringRelatedField(default=None)
 	last_message = serializers.StringRelatedField(default=None)
@@ -28,25 +31,48 @@ class ChatSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 
-class AccountSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Account
-		fields = '__all__'
-
-
 class CommentSerializer(serializers.ModelSerializer):
+	'''Comment Serializer'''
 	class Meta:
-		model = Tweet
+		model = Comment
 		fields = '__all__'
+		read_only_fields = ['tweet', 'parent', 'liked_by', 'retweeted_by', 'account']
 
 
 class TweetSerializer(serializers.ModelSerializer):
-	comments_count = serializers.IntegerField()
-	retweeted_count = serializers.IntegerField()
-	liked_count = serializers.IntegerField()
-	# account = AccountSerializer()
-	# last_liked_by = serializers.IntegerField()
-	# last_retweeted_by = serializers.IntegerField()
+	'''Tweet Serializer'''
+	comments_count = serializers.IntegerField(default=None)
+	retweeted_count = serializers.IntegerField(default=None)
+	liked_count = serializers.IntegerField(default=None)
 	class Meta:
 		model = Tweet
 		fields = '__all__'
+
+
+class ProfileTweetSerializer(serializers.ModelSerializer):
+	'''Tweet Serializer of User Profile'''
+	comments_count = serializers.IntegerField(default=None)
+	retweeted_count = serializers.IntegerField(default=None)
+	liked_count = serializers.IntegerField(default=None)
+	comments = CommentSerializer(many=True)
+	class Meta:
+		model = Tweet
+		fields = (
+			'account', 'text', 'media', 'created_at',
+			'comments_count', 'retweeted_count',
+			'liked_count', 'comments', 'liked_by')
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+	'''Profile Serializer of Account'''
+	followings_count = serializers.IntegerField(read_only=True)
+	followers_count = serializers.IntegerField(read_only=True)
+	tweets = ProfileTweetSerializer(many=True)
+	class Meta:
+		model = Account
+		fields = (
+			'username', 'first_name',
+			'last_name', 'followings_count',
+			'followers_count', 'tweets', 'avatar',
+			'email', 'phone', 'gender', 'birth_date',
+			'bio', 'url', 'is_online', 'created_at')

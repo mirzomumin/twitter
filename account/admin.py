@@ -12,7 +12,7 @@ class AccountAdmin(UserAdmin):
 	model = Account
 	list_display = ('username', 'email', 'phone', 'gender', 'birth_date', 'is_staff')
 	fieldsets = UserAdmin.fieldsets + (
-		(None, {'fields': ('phone', 'gender', 'birth_date', 'avatar')}),
+		(None, {'fields': ('phone', 'gender', 'birth_date', 'avatar', 'followers', 'followings')}),
 	)
 	add_fieldsets = UserAdmin.add_fieldsets + (
 		(None, {'fields': ('email', 'phone', 'gender', 'birth_date',)}),

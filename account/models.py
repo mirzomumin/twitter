@@ -26,8 +26,8 @@ class Account(AbstractUser):
 	is_verified = models.BooleanField(default=False)
 	is_online = models.BooleanField(default=False)
 
-	followings = models.ManyToManyField('self')
-	followers = models.ManyToManyField('self')
+	followings = models.ManyToManyField('self', blank=True)
+	followers = models.ManyToManyField('self', blank=True)
 
 	created_at = models.DateField(auto_now_add=True)
 	updated_at = models.DateField(auto_now=True)
